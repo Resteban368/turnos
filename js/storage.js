@@ -28,6 +28,11 @@ const DEFAULT_STATE = {
   // Historial de los últimos 10 turnos llamados (para el display)
   callHistory: [],
 
+  // Preferencias del sistema
+  settings: {
+    notificationMode: 'voice' // 'sound' o 'voice'
+  },
+
   // Timestamp del último cambio (usado para detectar actualizaciones cruzadas)
   lastUpdated: 0,
 };
@@ -90,6 +95,9 @@ function resetState() {
     fresh.modules[i].callLogs = [];
     fresh.modules[i].finishedTickets = [];
   }
+
+  // Conservar configuraciones globales
+  fresh.settings = current.settings || DEFAULT_STATE.settings;
 
   setState(fresh);
 }

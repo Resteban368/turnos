@@ -352,9 +352,6 @@ btnLlamar.addEventListener('click', () => {
     const mod = state.modules[moduleId];
     if (!mod.currentTicket) return;
 
-    // Reproducir campanilla
-    playBell();
-
     // Registrar el llamado en el historial del display
     callCurrentTicket(state, moduleId);
     setState(state);

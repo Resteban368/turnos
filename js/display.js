@@ -107,21 +107,28 @@ function renderModules(state) {
 
 // -----------------------------------------------------------------
 // checkForNewCalls: Compara el estado actual con el previo para
-// disparar el sonido de campanilla si hay un nuevo llamado.
+// disparar la notificación (Voz o Sonido) si hay un nuevo llamado.
 // -----------------------------------------------------------------
 function checkForNewCalls(state) {
-  let hasNewCall = false;
+  const notificationMode = (state.settings && state.settings.notificationMode) || 'sound';
 
   for (let i = 1; i <= 4; i++) {
-    const calledAt = state.modules[i].calledAt || 0;
-    if (calledAt > lastCalledAtMap[i]) {
-      hasNewCall = true;
-      lastCalledAtMap[i] = calledAt;
-    }
-  }
+    const mod = state.modules[i];
+    const calledAt = mod.calledAt || 0;
 
-  if (hasNewCall) {
-    playBell();
+    if (calledAt > lastCalledAtMap[i]) {
+      lastCalledAtMap[i] = calledAt;
+
+      // Acción basada en el modo configurado (Mutuamente Excluyentes)
+      if (notificationMode === 'voice') {
+        if (mod.currentTicket) {
+          announceTicket(mod.currentTicket, i);
+        }
+      } else {
+        // Por defecto o si es 'sound', solo campana
+        playBell();
+      }
+    }
   }
 }
 

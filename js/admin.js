@@ -20,6 +20,7 @@ const btnDeactivateAll = document.getElementById('btn-deactivate-all');
 const modalReset = document.getElementById('modal-reset');
 const btnCancelReset = document.getElementById('btn-cancel-reset');
 const btnConfirmReset = document.getElementById('btn-confirm-reset');
+const radioNotificationModes = document.getElementsByName('notification-mode');
 
 // -----------------------------------------------------------------
 // renderModulesGrid: Genera dinámicamente las 4 tarjetas de módulo
@@ -104,6 +105,13 @@ function refreshUI() {
     const state = getState();
     renderModulesGrid(state);
     updateStats(state);
+    
+    // Sincronizar estado de los radio buttons de notificación
+    if (radioNotificationModes.length > 0 && state.settings) {
+        radioNotificationModes.forEach(radio => {
+            radio.checked = (radio.value === state.settings.notificationMode);
+        });
+    }
 }
 
 // -----------------------------------------------------------------
@@ -202,6 +210,20 @@ btnConfirmReset.addEventListener('click', () => {
     resetState();        // Reinicia localStorage al estado por defecto
     modalReset.classList.remove('visible');
     refreshUI();
+});
+
+// -----------------------------------------------------------------
+// Acción: Cambiar modo de notificación
+// -----------------------------------------------------------------
+radioNotificationModes.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            const state = getState();
+            if (!state.settings) state.settings = {};
+            state.settings.notificationMode = e.target.value;
+            setState(state);
+        }
+    });
 });
 
 // -----------------------------------------------------------------

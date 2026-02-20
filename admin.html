@@ -113,6 +113,24 @@
                 <button class="btn btn-danger" id="btn-reset">Reiniciar Turnos</button>
             </div>
 
+            <!-- Configuración de Voz -->
+            <div class="action-row" style="margin-top: 1.5rem; border-top: 1px solid var(--gray-100); padding-top: 1.5rem;">
+                <div class="action-info">
+                    <h3>🎙️ Modo de Notificación</h3>
+                    <p>Seleccione cómo desea anunciar los turnos en la pantalla de espera.</p>
+                </div>
+                <div class="notification-modes" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                        <input type="radio" name="notification-mode" value="sound" style="width: 20px; height: 20px;">
+                        <span style="font-weight: 600;">🔔 Solo Sonido de Alerta</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                        <input type="radio" name="notification-mode" value="voice" style="width: 20px; height: 20px;">
+                        <span style="font-weight: 600;">🎙️ Llamado por Voz </span>
+                    </label>
+                </div>
+            </div>
+
         </div>
 
     </div><!-- /admin-body -->

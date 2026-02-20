@@ -73,28 +73,24 @@ function createBellTone(ctx, frequency, startDelay, gainValue) {
 
 // -----------------------------------------------------------------
 // announceTicket: Anuncia el turno por voz (SpeechSynthesis API).
-// Preparado para integración futura. Actualmente desactivado.
 // ticket: código del turno (ej: "A05")
 // moduleId: número del módulo
 // -----------------------------------------------------------------
 function announceTicket(ticket, moduleId) {
-    // Verificar disponibilidad de la API de síntesis de voz
-    if (!window.speechSynthesis) {
-        console.warn('SpeechSynthesis API no disponible.');
-        return;
-    }
+    if (!window.speechSynthesis) return;
 
-    // Formatear el mensaje de voz
-    // Ejemplo: "Turno A cero cinco, pase al módulo dos"
-    const letters = ticket.slice(0, 1);      // Letra (ej: A)
-    const numbers = parseInt(ticket.slice(1)); // Número (ej: 5)
+    // Cancelar cualquier anuncio previo para evitar que se amontonen
+    window.speechSynthesis.cancel();
 
-    const message = `Turno ${letters} ${numbers}, pase al módulo ${moduleId}`;
+    // Formatear el mensaje: "Turno A 15, Módulo 1"
+    const letter = ticket.charAt(0);
+    const number = parseInt(ticket.slice(1));
+    const message = `Turno ${letter} ${number}, Módulo ${moduleId}`;
 
     const utterance = new SpeechSynthesisUtterance(message);
-    utterance.lang = 'es-ES';  // Español
-    utterance.rate = 0.9;      // Velocidad ligeramente reducida
-    utterance.pitch = 1;       // Tono normal
+    utterance.lang = 'es-ES';
+    utterance.rate = 0.9; 
+    utterance.pitch = 1;
 
     window.speechSynthesis.speak(utterance);
 }
