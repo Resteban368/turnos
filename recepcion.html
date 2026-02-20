@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recepción — Sistema de Turnos</title>
+    <meta name="description" content="Vista del recepcionista para generar turnos normales o de alta prioridad." />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/recepcion.css" />
+</head>
+
+<body class="recepcion-page">
+
+    <!-- ========================================================
+     VISTA DEL RECEPCIONISTA
+     Permite ingresar el documento del paciente y generar
+     el turno (normal o alta prioridad).
+     ======================================================== -->
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="navbar-brand-logo">🏥</div>
+            <span class="navbar-brand-text">Sistema de Turnos</span>
+        </div>
+        <div class="navbar-right">
+            <span class="badge badge-normal" id="nav-role-badge">Recepción</span>
+            <button class="btn btn-secondary btn-sm" onclick="logout()">🚪 Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <div class="recepcion-layout">
+
+            <!-- ===== Panel izquierdo: Generador de turnos ===== -->
+            <div class="ticket-generator animate-in">
+
+                <div class="ticket-generator-header">
+                    <h2>🎟️ Generar Turno</h2>
+                    <p>Ingresa el documento del paciente y selecciona la prioridad</p>
+                </div>
+
+                <div class="ticket-generator-body">
+
+                    <!-- Vista previa del próximo turno -->
+                    <div class="next-ticket-preview">
+                        <div class="next-ticket-label">Próximo Turno</div>
+                        <div class="next-ticket-code" id="next-ticket-preview">A01</div>
+                    </div>
+
+                    <!-- Formulario para ingresar datos del paciente -->
+                    <form class="ticket-form" id="ticket-form" autocomplete="off" novalidate>
+
+                        <div class="input-group">
+                            <label class="input-label" for="doc-id">Documento de Identidad</label>
+                            <input type="text" id="doc-id" class="input-field" placeholder="Ej: 12345678" maxlength="20"
+                                required />
+                        </div>
+
+                        <!-- Mensaje de validación -->
+                        <div id="form-error" class="alert alert-error" style="display:none;"></div>
+
+                        <!-- Botones de prioridad -->
+                        <div class="ticket-buttons">
+
+                            <!-- Turno Normal -->
+                            <button type="button" class="btn-normal-ticket" id="btn-normal" disabled>
+                                <span class="btn-icon">🔵</span>
+                                <span>Turno Normal</span>
+                            </button>
+
+                            <!-- Turno Alta Prioridad -->
+                            <button type="button" class="btn-priority-ticket" id="btn-priority" disabled>
+                                <span class="btn-icon">🔴</span>
+                                <span>Alta Prioridad</span>
+                            </button>
+
+                        </div>
+
+                        <!-- Confirmación tras generar turno -->
+                        <div class="ticket-confirmation" id="ticket-confirmation">
+                            <span class="confirmation-icon">✅</span>
+                            <div class="confirmation-text">
+                                <strong id="confirmation-ticket">—</strong>
+                                <span id="confirmation-detail">Turno generado correctamente</span>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div><!-- /ticket-generator -->
+
+            <!-- ===== Panel derecho: Estado de la cola ===== -->
+            <div class="queue-panel">
+
+                <!-- Contadores de la cola -->
+                <div class="queue-stats-card animate-in" style="animation-delay:0.1s;">
+                    <h3>📊 Cola de Espera</h3>
+                    <div class="queue-numbers">
+                        <div class="queue-num-item high-priority">
+                            <div class="queue-num-value" id="q-high">0</div>
+                            <div class="queue-num-label">🔴 Prioridad Alta</div>
+                        </div>
+                        <div class="queue-num-item normal">
+                            <div class="queue-num-value" id="q-normal">0</div>
+                            <div class="queue-num-label">🔵 Normal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estado de los módulos -->
+                <div class="queue-stats-card animate-in" style="animation-delay:0.15s;">
+                    <h3>🖥️ Módulos Activos</h3>
+                    <div id="modules-status-list" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
+                </div>
+
+                <!-- Próximos en cola (vista previa) -->
+                <div class="queue-list-card animate-in" style="animation-delay:0.2s;">
+                    <h3>⏳ Próximos en Cola</h3>
+                    <div id="queue-preview-list">
+                        <div class="queue-empty">No hay turnos en espera</div>
+                    </div>
+                </div>
+
+            </div><!-- /queue-panel -->
+
+        </div><!-- /recepcion-layout -->
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/tickets.js"></script>
+    <script src="js/recepcion.js"></script>
+
+</body>
+
+</html>
