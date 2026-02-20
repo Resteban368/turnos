@@ -6,9 +6,12 @@ Un sistema web moderno y ligero para la gestión de turnos en salas de espera, d
 
 - **Generación de Tickets**: Interfaz para recepción que permite crear turnos Normales y de Alta Prioridad.
 - **Llamado por Módulos**: Cada operador puede llamar al siguiente turno, repetir el llamado y marcar como "atendiendo".
-- **Visualización Pública**: Pantalla optimizada para televisores o monitores en sala de espera, con alertas sonoras y visuales.
+- **Visualización Pública**: Pantalla optimizada para televisores o monitores en sala de espera, con alertas visuales (destellos amarillos) y auditivas.
+- **Notificaciones Inteligentes**: Sistema de audio configurable por el administrador:
+  - **🔔 Solo Sonido**: Notificación clásica mediante campanilla digital.
+  - **🎙️ Llamado por Voz**: Anuncio hablado del turno y módulo (ej: "Turno A15, Módulo 1").
 - **Sincronización en Tiempo Real**: Los cambios en un módulo se reflejan instantáneamente en la pantalla pública y demás terminales.
-- **Historial y Búsqueda**: Registro de turnos atendidos y búsqueda rápida de llamados por documento.
+- **Historial y Búsqueda**: Registro de turnos atendidos, cronómetro de atención por paciente y búsqueda rápida por código de turno.
 
 ## 🛠️ Arquitectura Técnica
 
@@ -16,7 +19,8 @@ El proyecto está construido exclusivamente con tecnologías web estándar (Vani
 
 - **Frontend**: HTML5 Semántico, CSS3 Moderno (Gradients, Flexbox, Grid).
 - **Lógica**: JavaScript (ES6+).
-- **Estado**: Gestión de estado global mediante `localStorage` y eventos de escucha `storage` para sincronización entre pestañas/ventanas.
+- **Estado**: Gestión de estado global mediante `localStorage` y eventos de escucha `storage`.
+- **Audio**: Uso de **Web Audio API** para la generación de la campanilla (sin archivos externos) y **Web Speech API** para la síntesis de voz nativa.
 
 ## 📂 Estructura del Proyecto
 
